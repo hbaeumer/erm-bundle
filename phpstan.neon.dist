@@ -1,0 +1,6 @@
+includes:
+	- vendor/phpstan/phpstan-doctrine/extension.neon
+parameters:
+    level: 4
+    excludes_analyse:
+    		- %rootDir%/../../../vendor
