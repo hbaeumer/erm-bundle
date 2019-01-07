@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * MIT License
  *
@@ -24,18 +23,22 @@
  * SOFTWARE.
  */
 
-namespace Hbaeumer\ErmBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+namespace Hbaeumer\ErmBundle\DependencyInjection;
 
-class ERMDiagramController extends AbstractController
+
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
+class ERMExtension extends Extension
 {
-    public function indexAction(): Response
+    public function load(array $configs, ContainerBuilder $container)
     {
-
-        return new Response(
-            "<html><body>foo</body></html>"
-        );
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.yml');
     }
+
+
 }
