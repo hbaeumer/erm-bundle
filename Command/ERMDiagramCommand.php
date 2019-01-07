@@ -27,6 +27,7 @@
 
 namespace Hbaeumer\ErmBundle\Command;
 
+use Hbaeumer\ErmBundle\Parser\PlantUmlEntityParser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -38,9 +39,21 @@ class ERMDiagramCommand extends Command
      * @var string
      */
     protected static $defaultName = 'foo:bar';
+    /**
+     * @var PlantUmlEntityParser
+     */
+    private $parser;
+
+    public function __construct(PlantUmlEntityParser $parser)
+    {
+        parent::__construct();
+        $this->parser = $parser;
+    }
+
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $output->writeln('foo');
+        $string = $this->parser->getMarkup();
+        $output->writeln($string);
     }
 }

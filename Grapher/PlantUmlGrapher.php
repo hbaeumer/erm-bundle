@@ -58,4 +58,11 @@ class PlantUmlGrapher
         $response = $this->client->get($this->basePath . "svg/" . $encoded);
         return $response->getBody()->getContents();
     }
+
+    public function getTXT(string $markup): string
+    {
+        $encoded = $this->encoder->encode($markup);
+        $response = $this->client->get($this->basePath . "txt/" . $encoded);
+        return $response->getBody()->getContents();
+    }
 }
