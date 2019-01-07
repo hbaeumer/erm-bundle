@@ -73,8 +73,6 @@ class PlantUmlEntityParser
             4 => ['1', '*'], // OneToMany
             8 => ['*', '*'], // ManyToMany
         ];
-
-
         foreach ($classMetadata->associationMappings as $associationMapping) {
             $multiplicity = $multimap[$associationMapping['type']];
             $this->markup->addAssociation(
@@ -84,5 +82,38 @@ class PlantUmlEntityParser
                 $multiplicity[1],
             );
         }
+        $this->getFields($classMetadata);
+    }
+
+    private function getFields(ClassMetadata $classMetadata): void
+    {
+        foreach ($classMetadata->fieldNames as $fieldName) {
+            $reflection = $classMetadata->getReflectionProperty($fieldName);
+            $visibility = $this->parseModifierProperty($reflection);
+            $type = $classMetadata->getFieldMapping($fieldName)['type'];
+            $this->markup->addAttribute(
+                $classMetadata->getName(),
+                $fieldName,
+                $type,
+                $visibility
+            );
+        }
+    }
+
+
+    private function parseModifierProperty(\ReflectionProperty $property): string
+    {
+        $string = '';
+        if ($property->isPublic()) {
+            $string = PlantUmlClassMarkup::VISIBILITY_PUBLIC;
+        }
+        if ($property->isProtected()) {
+            $string = PlantUmlClassMarkup::VISIBILITY_PROTECTED;
+        }
+        if ($property->isPrivate()) {
+            $string = PlantUmlClassMarkup::VISIBILITY_PRIVATE;
+        }
+
+        return $string;
     }
 }

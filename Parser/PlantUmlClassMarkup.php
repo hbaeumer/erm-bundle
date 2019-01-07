@@ -110,7 +110,7 @@ class PlantUmlClassMarkup
      */
     public function addAssociation(string $source, string $destination, ?string $sMultipicity = null, ?string $dMultipicity = null)
     {
-        $pattern = '"%s" %s -- %s "%s" : >';
+        $pattern = '"%s" %s --> %s "%s"';
         $string = vsprintf(
             $pattern,
             [
