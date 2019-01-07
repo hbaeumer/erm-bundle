@@ -49,10 +49,11 @@ class PlantUmlEntityParser
         $this->entityManager = $entityManager;
     }
 
-    public function getMarkup(): void
+    public function getMarkup(): string
     {
         $this->markup = new PlantUmlClassMarkup();
         $this->getFromMetaDataFactory($this->entityManager->getMetadataFactory());
+        return $this->markup->getMarkup();
     }
 
     private function getFromMetaDataFactory(ClassMetadataFactory $metadataFactory): void

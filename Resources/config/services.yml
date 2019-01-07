@@ -1,4 +1,20 @@
 services:
+
+  hbaeumer_erm.parser.plant_uml_entity_parser:
+    class: Hbaeumer\ErmBundle\Parser\PlantUmlEntityParser
+    arguments:
+      - "@doctrine.orm.entity_manager"
+
+  hbaeumer_erm.grapher.encoder:
+    class: Hbaeumer\ErmBundle\Grapher\Encoder
+
+  hbaeumer_erm.grapher.plant_uml_grapher:
+    class: Hbaeumer\ErmBundle\Grapher\PlantUmlGrapher
+    arguments:
+      - "@baeumer_erm.grapher.encoder"
+
   Hbaeumer\ErmBundle\Command\ERMDiagramCommand:
     tags:
       - { name: 'console.command', command: 'doctrine:erm' }
+    arguments:
+      - "@hbaeumer_erm.parser.plant_uml_entity_parser"

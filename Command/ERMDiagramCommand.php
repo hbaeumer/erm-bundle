@@ -27,6 +27,7 @@
 
 namespace Hbaeumer\ErmBundle\Command;
 
+use Hbaeumer\ErmBundle\Grapher\PlantUmlGrapher;
 use Hbaeumer\ErmBundle\Parser\PlantUmlEntityParser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -43,17 +44,23 @@ class ERMDiagramCommand extends Command
      * @var PlantUmlEntityParser
      */
     private $parser;
+    /**
+     * @var PlantUmlGrapher
+     */
+    private $grapher;
 
-    public function __construct(PlantUmlEntityParser $parser)
+    public function __construct(PlantUmlEntityParser $parser, PlantUmlGrapher $grapher)
     {
         parent::__construct();
         $this->parser = $parser;
+        $this->grapher = $grapher;
     }
 
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $string = $this->parser->getMarkup();
+        $markup = $this->parser->getMarkup();
+        $string = $this->grapher->getTXT($markup);
         $output->writeln($string);
     }
 }
