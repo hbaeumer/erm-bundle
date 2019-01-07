@@ -26,6 +26,9 @@
 
 namespace Hbaeumer\ErmBundle;
 
-class HbaeumerErmBundle
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+class HbaeumerErmBundle extends Bundle
 {
+
 }
