@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * MIT License
  *
@@ -25,23 +24,20 @@
  */
 
 
-namespace Hbaeumer\ErmBundle\Command;
+namespace Hbaeumer\ErmBundle\DependencyInjection;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
-class ERMDiagramCommand extends Command
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader;
+
+class HbaumerErmExtension# extends Extension
 {
-
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'foo:bar';
-
-
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $output->writeln('foo');
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.yml');
     }
+
+
 }

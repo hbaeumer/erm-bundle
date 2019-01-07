@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * MIT License
  *
@@ -23,22 +23,38 @@
  * SOFTWARE.
  */
 
+namespace Hbaeumer\ErmBundle\Grapher;
 
-namespace Hbaeumer\ErmBundle\DependencyInjection;
+use GuzzleHttp\Client;
 
-
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader;
-
-class ERMExtension extends Extension
+class PlantUmlGrapher
 {
-    public function load(array $configs, ContainerBuilder $container)
+
+    /**
+     * @var string
+     */
+    private $basePath = "http://www.plantuml.com/plantuml/";
+
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * @var Encoder
+     */
+    private $encoder;
+
+    public function __construct(Client $client, Encoder $encoder)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $this->client = $client;
+        $this->encoder = $encoder;
     }
 
-
+    public function getSVG(string $markup): string
+    {
+        $encoded = $this->encoder->encode($markup);
+        $response = $this->client->get($this->basePath . "svg/" . $encoded);
+        return $response->getBody()->getContents();
+    }
 }

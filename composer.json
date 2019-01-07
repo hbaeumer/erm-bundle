@@ -24,6 +24,7 @@
     "ext-zlib": "*",
     "doctrine/common": "~2.0",
     "doctrine/orm": "~2.0",
+    "guzzlehttp/guzzle": "^6.3",
     "symfony/console": "~3.0|^4.0",
     "symfony/framework-bundle": "~3.0|^4.0"
   },
