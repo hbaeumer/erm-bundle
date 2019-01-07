@@ -33,7 +33,6 @@ class ERMDiagramController extends AbstractController
 {
     public function indexAction(): Response
     {
-
         return new Response(
             "<html><body>foo</body></html>"
         );

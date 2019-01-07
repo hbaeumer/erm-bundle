@@ -34,7 +34,6 @@ class PlantUmlClassMarkup
     const VISIBILITY_PRIVATE = '-';
     const VISIBILITY_PACKAGE_PRIVATE = '-';
 
-
     /**
      * @var string
      */

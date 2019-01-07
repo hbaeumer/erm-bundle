@@ -39,7 +39,6 @@ class ERMDiagramCommand extends Command
      */
     protected static $defaultName = 'foo:bar';
 
-
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('foo');
