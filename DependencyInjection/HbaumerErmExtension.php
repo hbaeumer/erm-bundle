@@ -31,7 +31,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 
-class HbaumerErmExtension# extends Extension
+class HbaumerErmExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
