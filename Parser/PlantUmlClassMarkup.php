@@ -105,15 +105,19 @@ class PlantUmlClassMarkup
     /**
      * @param string $source FQCN
      * @param string $destination FQCN
+     * @param string|null $sMultipicity
+     * @param string|null $dMultipicity
      */
-    public function addAssociation(string $source, string $destination)
+    public function addAssociation(string $source, string $destination, ?string $sMultipicity = null, ?string $dMultipicity = null)
     {
-        $pattern = '"%s" -- "%s" : >';
+        $pattern = '"%s" %s -- %s "%s" : >';
         $string = vsprintf(
             $pattern,
             [
                 $this->getClassName($source),
+                ($sMultipicity) ? '"' . $sMultipicity . '"' : '',
                 $this->getClassName($destination),
+                ($dMultipicity) ? '"' . $dMultipicity . '"' : '',
             ]
         );
         $this->addLine($string);

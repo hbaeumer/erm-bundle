@@ -67,9 +67,22 @@ class PlantUmlEntityParser
     public function createMarkupFromMetaData(ClassMetadata $classMetadata): void
     {
         $this->markup->addClass($classMetadata->getName());
+        $multimap = [
+            1 => ['1', '1'], // oneToOne
+            2 => ['*', '1'],  // ManyToOne
+            4 => ['1', '*'], // OneToMany
+            8 => ['*', '*'], // ManyToMany
+        ];
+
 
         foreach ($classMetadata->associationMappings as $associationMapping) {
-            $this->markup->addAssociation($classMetadata->getName(), $associationMapping['targetEntity']);
+            $multiplicity = $multimap[$associationMapping['type']];
+            $this->markup->addAssociation(
+                $classMetadata->getName(),
+                $associationMapping['targetEntity'],
+                $multiplicity[0],
+                $multiplicity[1],
+            );
         }
     }
 }
