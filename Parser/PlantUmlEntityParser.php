@@ -67,5 +67,9 @@ class PlantUmlEntityParser
     public function createMarkupFromMetaData(ClassMetadata $classMetadata): void
     {
         $this->markup->addClass($classMetadata->getName());
+
+        foreach ($classMetadata->associationMappings as $associationMapping) {
+            $this->markup->addAssociation($classMetadata->getName(), $associationMapping['targetEntity']);
+        }
     }
 }

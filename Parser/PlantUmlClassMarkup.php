@@ -37,7 +37,7 @@ class PlantUmlClassMarkup
     /**
      * @var string
      */
-    private $markup = '';
+    private $markup = 'set namespaceSeparator /' . PHP_EOL;
 
     public function addClass(string $fqcn): void
     {
@@ -100,6 +100,24 @@ class PlantUmlClassMarkup
                 'Visibility must be one of PlantUmlClassMarkup::VISIBILITY_*'
             );
         }
+    }
+
+    /**
+     * @param string $source FQCN
+     * @param string $destination FQCN
+     */
+    public function addAssociation(string $source, string $destination)
+    {
+        $pattern = '"%s" -- "%s" : >';
+        $string = vsprintf(
+            $pattern,
+            [
+                $this->getClassName($source),
+                $this->getClassName($destination),
+            ]
+        );
+        $this->addLine($string);
+
     }
 
     public function __toString()
