@@ -60,6 +60,7 @@ class ERMDiagramCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $markup = $this->parser->getMarkup();
+        $output->writeln($markup);
         $string = $this->grapher->getTXT($markup);
         $output->writeln($string);
     }

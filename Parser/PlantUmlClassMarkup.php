@@ -116,8 +116,9 @@ class PlantUmlClassMarkup
             [
                 $this->getClassName($source),
                 ($sMultipicity) ? '"' . $sMultipicity . '"' : '',
-                $this->getClassName($destination),
                 ($dMultipicity) ? '"' . $dMultipicity . '"' : '',
+                $this->getClassName($destination),
+
             ]
         );
         $this->addLine($string);

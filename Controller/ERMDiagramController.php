@@ -26,15 +26,43 @@
 
 namespace Hbaeumer\ErmBundle\Controller;
 
+use Hbaeumer\ErmBundle\Grapher\PlantUmlGrapher;
+use Hbaeumer\ErmBundle\Parser\PlantUmlEntityParser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class ERMDiagramController extends AbstractController
 {
+
+    /**
+     * @var PlantUmlGrapher
+     */
+    private $umlGrapher;
+
+    /**
+     * @var PlantUmlEntityParser
+     */
+    private $plantUmlEntityParser;
+
+    /**
+     * ERMDiagramController constructor.
+     * @param PlantUmlGrapher $umlGrapher
+     * @param PlantUmlEntityParser $plantUmlEntityParser
+     */
+    public function __construct(PlantUmlGrapher $umlGrapher, PlantUmlEntityParser $plantUmlEntityParser)
+    {
+        $this->umlGrapher = $umlGrapher;
+        $this->plantUmlEntityParser = $plantUmlEntityParser;
+    }
+
+
     public function indexAction(): Response
     {
+
+        $markup = $this->plantUmlEntityParser->getMarkup();
+        $svg = $this->umlGrapher->getSVG($markup);
         return new Response(
-            "<html><body>foo</body></html>"
+            "<html><body>$svg</body></html>"
         );
     }
 }

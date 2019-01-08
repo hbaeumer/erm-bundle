@@ -79,7 +79,7 @@ class PlantUmlEntityParser
                 $classMetadata->getName(),
                 $associationMapping['targetEntity'],
                 $multiplicity[0],
-                $multiplicity[1],
+                $multiplicity[1]
             );
         }
         $this->getFields($classMetadata);
