@@ -1,3 +1,3 @@
 hbaeumer_erm:
   path:     /erm
-  defaults: { _controller: HbaeumerERMBundle:ERMDiagram:index }
+  defaults: { _controller: HbaeumerErmBundle:ERMDiagram:index }
