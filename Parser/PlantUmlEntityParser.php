@@ -27,93 +27,126 @@
 
 namespace Hbaeumer\ErmBundle\Parser;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\ClassMetadata;
-
-class PlantUmlEntityParser
+class PlantUmlClassMarkup
 {
+    const VISIBILITY_PUBLIC = '+';
+    const VISIBILITY_PROTECTED = '#';
+    const VISIBILITY_PRIVATE = '-';
+    const VISIBILITY_PACKAGE_PRIVATE = '-';
 
     /**
-     * @var EntityManagerInterface
+     * @var string
      */
-    private $entityManager;
+    private $markup = 'set namespaceSeparator /' . PHP_EOL;
 
-    /**
-     * @var PlantUmlClassMarkup
-     */
-    private $markup;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function addClass(string $fqcn, string $type, string $tableName): void
     {
-        $this->entityManager = $entityManager;
+        $this->addLine($type . ' ' . $this->getClassName($fqcn) . ' <' . $tableName . '> <<Entity>>');
+    }
+
+    private function addLine($string): void
+    {
+        $this->markup .= $string . PHP_EOL;
+    }
+
+    private function getClassName(string $fqcn): string
+    {
+        return str_replace('\\', '/', $fqcn);
+    }
+
+    public function addParent(string $source, string $destination)
+    {
+        $pattern = '"%s" --|> "%s"';
+        $string = vsprintf(
+            $pattern,
+            [
+                $this->getClassName($source),
+                $this->getClassName($destination),
+
+            ]
+        );
+        $this->addLine($string);
+
+    }
+
+    public function addAttribute(string $fqcn, string $attribute, ?string $type = null, ?string $visibility = null, ?string $defaultValue = null, ?string $multiplicity = null): void
+    {
+        $pattern = '"%s" : %s%s';
+        if ($visibility) {
+            $this->assertVisibility($visibility);
+        }
+        $string = vsprintf(
+            $pattern,
+            [
+                $this->getClassName($fqcn),
+                (string)$visibility,
+                $attribute,
+            ]
+        );
+
+        if ($type) {
+            $string .= ': ' . $type;
+        }
+
+        if ($multiplicity) {
+            $string .= '[' . $multiplicity . ']';
+        }
+
+        if ($defaultValue) {
+            $string .= ' =' . $defaultValue;
+        }
+
+        $this->addLine($string);
+    }
+
+    private function assertVisibility(string $visibility): void
+    {
+        if (!in_array(
+            $visibility,
+            [
+                self::VISIBILITY_PUBLIC,
+                self::VISIBILITY_PROTECTED,
+                self::VISIBILITY_PRIVATE,
+                self::VISIBILITY_PACKAGE_PRIVATE,
+            ],
+            true
+        )) {
+            throw new \InvalidArgumentException(
+                'Visibility must be one of PlantUmlClassMarkup::VISIBILITY_*'
+            );
+        }
+    }
+
+    /**
+     * @param string $source FQCN
+     * @param string $destination FQCN
+     * @param string|null $sMultipicity
+     * @param string|null $dMultipicity
+     */
+    public function addAssociation(string $source, string $destination, ?string $sMultipicity = null, ?string $dMultipicity = null)
+    {
+        $pattern = '"%s" %s --> %s "%s"';
+        $string = vsprintf(
+            $pattern,
+            [
+                $this->getClassName($source),
+                ($sMultipicity) ? '"' . $sMultipicity . '"' : '',
+                ($dMultipicity) ? '"' . $dMultipicity . '"' : '',
+                $this->getClassName($destination),
+
+            ]
+        );
+        $this->addLine($string);
+
+    }
+
+    public function __toString()
+    {
+        return $this->getMarkup();
     }
 
     public function getMarkup(): string
     {
-        $this->markup = new PlantUmlClassMarkup();
-        $this->getFromMetaDataFactory($this->entityManager->getMetadataFactory());
-        return $this->markup->getMarkup();
-    }
-
-    private function getFromMetaDataFactory(ClassMetadataFactory $metadataFactory): void
-    {
-        $metadatas = $metadataFactory->getAllMetadata();
-        foreach ($metadatas as $metadata) {
-            $this->createMarkupFromMetaData($metadata);
-        }
-    }
-
-    public function createMarkupFromMetaData(ClassMetadata $classMetadata): void
-    {
-        $this->markup->addClass($classMetadata->getName());
-        $multimap = [
-            1 => ['1', '1'], // oneToOne
-            2 => ['*', '1'],  // ManyToOne
-            4 => ['1', '*'], // OneToMany
-            8 => ['*', '*'], // ManyToMany
-        ];
-        foreach ($classMetadata->associationMappings as $associationMapping) {
-            $multiplicity = $multimap[$associationMapping['type']];
-            $this->markup->addAssociation(
-                $classMetadata->getName(),
-                $associationMapping['targetEntity'],
-                $multiplicity[0],
-                $multiplicity[1]
-            );
-        }
-        $this->getFields($classMetadata);
-    }
-
-    private function getFields(ClassMetadata $classMetadata): void
-    {
-        foreach ($classMetadata->fieldNames as $fieldName) {
-            $reflection = $classMetadata->getReflectionProperty($fieldName);
-            $visibility = $this->parseModifierProperty($reflection);
-            $type = $classMetadata->getFieldMapping($fieldName)['type'];
-            $this->markup->addAttribute(
-                $classMetadata->getName(),
-                $fieldName,
-                $type,
-                $visibility
-            );
-        }
-    }
-
-
-    private function parseModifierProperty(\ReflectionProperty $property): string
-    {
-        $string = '';
-        if ($property->isPublic()) {
-            $string = PlantUmlClassMarkup::VISIBILITY_PUBLIC;
-        }
-        if ($property->isProtected()) {
-            $string = PlantUmlClassMarkup::VISIBILITY_PROTECTED;
-        }
-        if ($property->isPrivate()) {
-            $string = PlantUmlClassMarkup::VISIBILITY_PRIVATE;
-        }
-
-        return $string;
+        return $this->markup;
     }
 }

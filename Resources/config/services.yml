@@ -21,6 +21,7 @@ services:
     arguments:
       - "@hbaeumer_erm.parser.plant_uml_entity_parser"
       - "@hbaeumer_erm.grapher.plant_uml_grapher"
+    public: true
 
   Hbaeumer\ErmBundle\Command\ERMDiagramCommand:
     tags:

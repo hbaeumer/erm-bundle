@@ -49,7 +49,7 @@ class ERMDiagramController extends AbstractController
      * @param PlantUmlGrapher $umlGrapher
      * @param PlantUmlEntityParser $plantUmlEntityParser
      */
-    public function __construct(PlantUmlGrapher $umlGrapher, PlantUmlEntityParser $plantUmlEntityParser)
+    public function __construct(PlantUmlEntityParser $plantUmlEntityParser, PlantUmlGrapher $umlGrapher)
     {
         $this->umlGrapher = $umlGrapher;
         $this->plantUmlEntityParser = $plantUmlEntityParser;

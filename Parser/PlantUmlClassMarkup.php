@@ -39,9 +39,9 @@ class PlantUmlClassMarkup
      */
     private $markup = 'set namespaceSeparator /' . PHP_EOL;
 
-    public function addClass(string $fqcn): void
+    public function addClass(string $fqcn, string $type, string $tableName): void
     {
-        $this->addLine('class ' . $this->getClassName($fqcn));
+        $this->addLine($type . ' ' . $this->getClassName($fqcn) . ' <' . $tableName . '> <<Entity>>');
     }
 
     private function addLine($string): void
@@ -52,6 +52,21 @@ class PlantUmlClassMarkup
     private function getClassName(string $fqcn): string
     {
         return str_replace('\\', '/', $fqcn);
+    }
+
+    public function addParent(string $source, string $destination)
+    {
+        $pattern = '"%s" --|> "%s"';
+        $string = vsprintf(
+            $pattern,
+            [
+                $this->getClassName($source),
+                $this->getClassName($destination),
+
+            ]
+        );
+        $this->addLine($string);
+
     }
 
     public function addAttribute(string $fqcn, string $attribute, ?string $type = null, ?string $visibility = null, ?string $defaultValue = null, ?string $multiplicity = null): void
