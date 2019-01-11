@@ -78,8 +78,6 @@ class PlantUmlEntityParser
 
     public function createMarkupFromMetaData(ClassMetadata $classMetadata): void
     {
-
-
         $this->markup->addClass($classMetadata->getName(), $this->getType($classMetadata), $classMetadata->getTableName());
         $multimap = [
             1 => ['1', '1'], // oneToOne
@@ -88,7 +86,6 @@ class PlantUmlEntityParser
             8 => ['*', '*'], // ManyToMany
         ];
         foreach ($classMetadata->associationMappings as $key => $associationMapping) {
-
             $multiplicity = $multimap[$associationMapping['type']];
             $this->markup->addAssociation(
                 $classMetadata->getName(),
@@ -112,8 +109,7 @@ class PlantUmlEntityParser
         $this->getParent($classMetadata);
     }
 
-
-    private function getParent(ClassMetadata $classMetadata)
+    private function getParent(ClassMetadata $classMetadata): void
     {
         $reflection = $classMetadata->getReflectionClass();
         $parent = $reflection->getParentClass();
@@ -131,7 +127,7 @@ class PlantUmlEntityParser
         }
     }
 
-    private function getField(ClassMetadata $classMetadata, string $fieldName, string $type, ?string $multiplicity = null)
+    private function getField(ClassMetadata $classMetadata, string $fieldName, string $type, ?string $multiplicity = null): void
     {
         $classReflection = $classMetadata->getReflectionClass();
         $defaults = $classReflection->getDefaultProperties();
@@ -155,7 +151,6 @@ class PlantUmlEntityParser
             $multiplicity
         );
     }
-
 
     private function parseModifierProperty(\ReflectionProperty $property): string
     {

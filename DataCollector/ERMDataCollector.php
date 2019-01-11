@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * MIT License
  *
@@ -24,38 +23,30 @@
  * SOFTWARE.
  */
 
-namespace Hbaeumer\ErmBundle\Controller;
 
-use Hbaeumer\ErmBundle\Grapher\PlantUmlGrapher;
-use Hbaeumer\ErmBundle\Parser\PlantUmlEntityParser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+namespace Hbaeumer\ErmBundle\DataCollector;
+
+
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-class ERMDiagramController extends AbstractController
+class ERMDataCollector extends DataCollector
 {
-
-    /**
-     * @var PlantUmlGrapher
-     */
-    private $umlGrapher;
-
-    /**
-     * @var PlantUmlEntityParser
-     */
-    private $plantUmlEntityParser;
-
-    public function __construct(PlantUmlEntityParser $plantUmlEntityParser, PlantUmlGrapher $umlGrapher)
+    public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $this->umlGrapher = $umlGrapher;
-        $this->plantUmlEntityParser = $plantUmlEntityParser;
+        $this->data = ['hbaeumer_uml' => []];
     }
 
-    public function indexAction(): Response
+    public function getName()
     {
-        $markup = $this->plantUmlEntityParser->getMarkup();
-        $svg = $this->umlGrapher->getSVG($markup);
-        return new Response(
-            "<html><body>$svg</body></html>"
-        );
+        return 'hbaeumer_erm';
     }
+
+    public function reset()
+    {
+        $this->data = [];
+    }
+
+
 }

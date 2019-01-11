@@ -41,10 +41,12 @@ class ERMDiagramCommand extends Command
      * @var string
      */
     protected static $defaultName = 'doctrine:erm:output';
+
     /**
      * @var PlantUmlEntityParser
      */
     private $parser;
+
     /**
      * @var PlantUmlGrapher
      */
@@ -57,12 +59,11 @@ class ERMDiagramCommand extends Command
         $this->grapher = $grapher;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->addOption('svg', 's', InputOption::VALUE_OPTIONAL, 'svg path');
-        $this->addOption('markup', 'm', InputOption::VALUE_OPTIONAL, 'markup output');
+        $this->addOption('markup', 'm', InputOption::VALUE_NONE, 'markup output');
     }
-
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {

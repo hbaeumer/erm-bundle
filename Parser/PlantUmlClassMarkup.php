@@ -54,7 +54,7 @@ class PlantUmlClassMarkup
         return str_replace('\\', '/', $fqcn);
     }
 
-    public function addParent(string $source, string $destination)
+    public function addParent(string $source, string $destination): void
     {
         $pattern = '"%s" --|> "%s"';
         $string = vsprintf(
@@ -66,7 +66,6 @@ class PlantUmlClassMarkup
             ]
         );
         $this->addLine($string);
-
     }
 
     public function addAttribute(string $fqcn, string $attribute, ?string $type = null, ?string $visibility = null, ?string $defaultValue = null, ?string $multiplicity = null): void
@@ -123,7 +122,7 @@ class PlantUmlClassMarkup
      * @param string|null $sMultipicity
      * @param string|null $dMultipicity
      */
-    public function addAssociation(string $source, string $destination, ?string $sMultipicity = null, ?string $dMultipicity = null)
+    public function addAssociation(string $source, string $destination, ?string $sMultipicity = null, ?string $dMultipicity = null): void
     {
         $pattern = '"%s" %s --> %s "%s"';
         $string = vsprintf(
@@ -137,7 +136,6 @@ class PlantUmlClassMarkup
             ]
         );
         $this->addLine($string);
-
     }
 
     public function __toString()
