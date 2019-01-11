@@ -1,5 +1,5 @@
 {
-  "name": "hbaeumer/doctrine-erm-bundle",
+  "name": "hbaeumer/erm-bundle",
   "type": "symfony-bundle",
   "license": "MIT",
   "authors": [
