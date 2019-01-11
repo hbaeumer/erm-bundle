@@ -51,3 +51,8 @@ class AppKernel extends Kernel
     // ...
 }
 ```
+
+routes/dev
+doctrine_yuml:
+  resource: "@HbaeumerErmBundle/Resources/config/routing.yml"
+  prefix:   /

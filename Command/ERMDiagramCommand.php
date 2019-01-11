@@ -31,6 +31,7 @@ use Hbaeumer\ErmBundle\Grapher\PlantUmlGrapher;
 use Hbaeumer\ErmBundle\Parser\PlantUmlEntityParser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ERMDiagramCommand extends Command
@@ -39,7 +40,7 @@ class ERMDiagramCommand extends Command
     /**
      * @var string
      */
-    protected static $defaultName = 'foo:bar';
+    protected static $defaultName = 'doctrine:erm:output';
     /**
      * @var PlantUmlEntityParser
      */
@@ -56,12 +57,21 @@ class ERMDiagramCommand extends Command
         $this->grapher = $grapher;
     }
 
+    protected function configure()
+    {
+        $this->addOption('svg', 's', InputOption::VALUE_OPTIONAL, 'svg path');
+        $this->addOption('markup', 'm', InputOption::VALUE_OPTIONAL, 'markup output');
+    }
+
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $markup = $this->parser->getMarkup();
-        $output->writeln($markup);
-        $string = $this->grapher->getTXT($markup);
-        $output->writeln($string);
+        if ($input->getOption('markup')) {
+            $output->writeln($markup);
+        }
+        if ($input->getOption('svg')) {
+            file_put_contents($input->getOption('svg'), $this->grapher->getTXT($markup));
+        }
     }
 }

@@ -25,7 +25,7 @@ services:
 
   Hbaeumer\ErmBundle\Command\ERMDiagramCommand:
     tags:
-      - { name: 'console.command', command: 'doctrine:erm' }
+      - { name: 'console.command', command: 'doctrine:erm:output' }
     arguments:
       - "@hbaeumer_erm.parser.plant_uml_entity_parser"
       - "@hbaeumer_erm.grapher.plant_uml_grapher"
