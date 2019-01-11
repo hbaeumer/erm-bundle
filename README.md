@@ -52,7 +52,13 @@ class AppKernel extends Kernel
 }
 ```
 
-routes/dev
+### Step 3: Configure Route
+
+```yaml
+#routes/dev/erm.yaml
+
 hbaeumer_erm:
   resource: "@HbaeumerErmBundle/Resources/config/routing.yml"
   prefix:   /
+```
+

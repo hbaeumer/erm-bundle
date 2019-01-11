@@ -1,12 +1,5 @@
 services:
 
-  hbaeumer_erm.toolbar:
-    class: Hbaeumer\ErmBundle\DataCollector\ERMDataCollector
-    tags:
-      - name:     data_collector
-        template: '@HbaeumerErmBundle/Toolbar/toolbar.html.twig'
-        id:       'hbaeumer_erm'
-
   hbaeumer_erm.parser.plant_uml_entity_parser:
     class: Hbaeumer\ErmBundle\Parser\PlantUmlEntityParser
     arguments:
