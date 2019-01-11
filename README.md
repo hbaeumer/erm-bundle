@@ -53,6 +53,6 @@ class AppKernel extends Kernel
 ```
 
 routes/dev
-doctrine_yuml:
+hbaeumer_erm:
   resource: "@HbaeumerErmBundle/Resources/config/routing.yml"
   prefix:   /
