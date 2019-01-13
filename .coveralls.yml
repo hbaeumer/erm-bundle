@@ -1,3 +1,4 @@
 service_name: travis-ci
 repo_token: ywgnIyTi7H1eagSKeGjbEvoYpQ8INoV8e
 coverage_clover: var/clover.xml
+json_path: var/coveralls-upload.json
