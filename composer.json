@@ -2,7 +2,7 @@
   "name": "hbaeumer/erm-bundle",
   "type": "symfony-bundle",
   "license": "MIT",
-  "description": "create an ERM Diagram of Doctrine Entities",
+  "description": "Create an ERM Diagram of Doctrine Entities",
   "support": {
     "issues": "https://github.com/hbaeumer/erm-bundle/issues",
     "source": "https://github.com/hbaeumer/erm-bundle"
