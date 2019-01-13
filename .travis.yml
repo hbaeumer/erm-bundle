@@ -30,10 +30,8 @@ matrix:
     - env: STABILITY="dev"
 
 
-before_install:
-  - composer require --dev php-coveralls/php-coveralls
-
 install:
+  - composer require php-coveralls/php-coveralls
   - composer update --prefer-dist --no-interaction
 
 script:
