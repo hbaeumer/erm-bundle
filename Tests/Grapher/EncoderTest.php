@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * MIT License
  *
@@ -24,29 +25,39 @@
  */
 
 
-namespace Hbaeumer\ErmBundle\DataCollector;
+namespace Hbaeumer\ErmBundle\Tests\Grapher;
 
+use Hbaeumer\ErmBundle\Grapher\Encoder;
+use PHPUnit\Framework\TestCase;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-
-class ERMDataCollector extends DataCollector
+class EncoderTest extends TestCase
 {
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+
+    /**
+     * @var Encoder
+     */
+    private $encoder;
+
+    /**
+     * @param string $given
+     * @param string $excpected
+     * @dataProvider getEndocerExamples
+     */
+    public function testEncode(string $given, string $excpected): void
     {
-        $this->data = ['hbaeumer_uml' => []];
+        $this->assertEquals($excpected, $this->encoder->encode($given));
     }
 
-    public function getName()
+    public function getEndocerExamples()
     {
-        return 'hbaeumer_erm';
+        return [
+            ['foo', 'IylF1m00'],
+            ['Ä€1231!', 'Ezpog6cDeP6neI80'],
+        ];
     }
 
-    public function reset()
+    protected function setUp(): void
     {
-        $this->data = [];
+        $this->encoder = new Encoder();
     }
-
-
 }

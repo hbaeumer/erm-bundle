@@ -25,8 +25,9 @@
  */
 
 
-namespace Hbaeumer\ErmBundle\Tests;
+namespace Hbaeumer\ErmBundle\Tests\Parser;
 
+use Hbaeumer\ErmBundle\Parser\ClassMarkupConfiguration;
 use Hbaeumer\ErmBundle\Parser\PlantUmlClassMarkup;
 use PHPUnit\Framework\TestCase;
 
@@ -40,9 +41,9 @@ class PlantUmlClassMarkupTest extends TestCase
 
     public function testAddClass(): void
     {
-        $this->markup->addClass('Entity\\Foo\\Bar');
+        $this->markup->addClass('Entity\\Foo\\Bar', 'class', 'foo');
 
-        $this->assertEquals('class Entity/Foo/Bar' . PHP_EOL, $this->markup->__toString());
+        $this->assertEquals('class Entity/Foo/Bar <foo> <<Entity>>' . PHP_EOL, $this->markup->__toString());
     }
 
     /**
@@ -67,6 +68,29 @@ class PlantUmlClassMarkupTest extends TestCase
             ['"Entity/Foo/Bar" : -foo: string ="Hugo"' . PHP_EOL, $fqcn, 'foo', 'string', '-', '"Hugo"'],
             ['"Entity/Foo/Bar" : -foo: string[1..2]' . PHP_EOL, $fqcn, 'foo', 'string', '-', null, '1..2'],
         ];
+    }
+
+    public function testAddPropertyWithWrongVisibility(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->markup->addAttribute('Entity\\Foo\\Bar', 'hugo', 'string', 'z');
+    }
+
+    public function testAddAssociation(): void
+    {
+        $this->markup->addAssociation('Foo', 'Bar');
+        $this->assertEquals('"Foo"  -->  "Bar"' . PHP_EOL, $this->markup->__toString());
+    }
+
+    public function testGetConfig(): void
+    {
+        $this->assertInstanceOf(ClassMarkupConfiguration::class, $this->markup->getConfig());
+    }
+
+    public function testAddParent(): void
+    {
+        $this->markup->addParent('Entity\\Foo\\Bar', 'Entity\\Foo\\Hugo');
+        $this->assertEquals('"Entity/Foo/Bar" --|> "Entity/Foo/Hugo"' . PHP_EOL, $this->markup->__toString());
     }
 
     protected function setUp(): void

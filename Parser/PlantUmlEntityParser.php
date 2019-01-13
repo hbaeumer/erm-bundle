@@ -31,6 +31,9 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
+/**
+ * @internal
+ */
 class PlantUmlEntityParser
 {
 
@@ -52,6 +55,7 @@ class PlantUmlEntityParser
     public function getMarkup(): string
     {
         $this->markup = new PlantUmlClassMarkup();
+        $this->markup->getConfig()->setNamespaceSeparator('/');
         $this->getFromMetaDataFactory($this->entityManager->getMetadataFactory());
         return $this->markup->getMarkup();
     }
@@ -94,15 +98,12 @@ class PlantUmlEntityParser
                 $multiplicity[1]
             );
             $fieldName = $associationMapping['fieldName'];
-            $reflection = $classMetadata->getReflectionProperty($fieldName);
-//            $visibility = $this->parseModifierProperty($reflection);
             $mv = null;
             if ($multiplicity[1] !== '1') {
                 $mv = $multiplicity[1];
             }
 
             $this->getField($classMetadata, $fieldName, $associationMapping['targetEntity'], $mv);
-//            $this->markup->addAttribute($classMetadata->getName(), $field, $reflection->getName(), $visibility, null, $mv);
         }
 
         $this->getFields($classMetadata);

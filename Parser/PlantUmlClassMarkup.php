@@ -27,6 +27,9 @@
 
 namespace Hbaeumer\ErmBundle\Parser;
 
+/**
+ * @internal
+ */
 class PlantUmlClassMarkup
 {
     const VISIBILITY_PUBLIC = '+';
@@ -37,7 +40,21 @@ class PlantUmlClassMarkup
     /**
      * @var string
      */
-    private $markup = 'set namespaceSeparator /' . PHP_EOL;
+    private $markup = '';
+
+    /**
+     * @var ClassMarkupConfiguration
+     */
+    private $config;
+
+    /**
+     *
+     * @param ClassMarkupConfiguration $config
+     */
+    public function __construct()
+    {
+        $this->config = new ClassMarkupConfiguration();
+    }
 
     public function addClass(string $fqcn, string $type, string $tableName): void
     {
@@ -141,6 +158,11 @@ class PlantUmlClassMarkup
     public function __toString()
     {
         return $this->getMarkup();
+    }
+
+    public function getConfig(): ClassMarkupConfiguration
+    {
+        return $this->config;
     }
 
     public function getMarkup(): string
