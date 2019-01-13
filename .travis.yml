@@ -37,3 +37,7 @@ install:
 script:
   - composer validate --strict --no-check-lock
   - ./vendor/bin/phpunit --coverage-clover ./var/clover.xml
+
+
+after_script:
+  - php vendor/bin/coveralls -v
