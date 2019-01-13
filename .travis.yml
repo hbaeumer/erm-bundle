@@ -39,5 +39,5 @@ script:
   - ./vendor/bin/phpunit --coverage-clover ./var/clover.xml
 
 
-after_script:
-  - php vendor/bin/coveralls -v
+after_success:
+  - travis_retry php vendor/bin/php-coveralls -v
