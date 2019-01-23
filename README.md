@@ -7,7 +7,7 @@ Applications that use Symfony Flex
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require hbaeumer/doctrine-erm-bundle
+$ composer require hbaeumer/erm-bundle
 ```
 
 Applications that don't use Symfony Flex
@@ -19,7 +19,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require hbaeumer/doctrine-erm-bundle
+$ composer require hbaeumer/erm-bundle
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -62,3 +62,7 @@ hbaeumer_erm:
   prefix:   /
 ```
 
+### Step 4: have a look
+
+http://localhost/erm
+ 

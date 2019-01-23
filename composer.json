@@ -44,19 +44,20 @@
     "squizlabs/php_codesniffer": "^3.4"
   },
   "scripts": {
-    "phpcs": "phpcs .",
-    "phpcbf": "phpcbf .",
-    "phpstan": "phpstan analyse .",
-    "phpmd": "phpmd . text ruleset.xml.dist ",
-    "phpunit": "phpunit ",
-    "check": [
-      "@phpcs",
-      "@phpstan",
-      "@phpmd"
+    "dev:phpcs": "phpcs .",
+    "dev:phpcbf": "phpcbf .",
+    "dev:phpstan": "phpstan analyse .",
+    "dev:phpmd": "phpmd . text ruleset.xml.dist ",
+    "dev:test": "phpunit ",
+    "dev:check": [
+      "@dev:phpcs",
+      "@dev:phpstan",
+      "@dev:phpmd",
+      "@dev:phpunit"
     ],
-    "fix": [
+    "dev:fix": [
       "php-cs-fixer fix .",
-      "@phpcbf"
+      "@dev:phpcbf"
     ]
   }
 }
