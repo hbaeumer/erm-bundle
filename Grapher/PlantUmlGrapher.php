@@ -34,20 +34,20 @@ class PlantUmlGrapher
 
     public function __construct(Client $client, Encoder $encoder)
     {
-        $this->client = $client;
+        $this->client  = $client;
         $this->encoder = $encoder;
     }
 
     public function getSVG(string $markup): string
     {
-        $encoded = $this->encoder->encode($markup);
+        $encoded  = $this->encoder->encode($markup);
         $response = $this->client->get($this->basePath . "svg/" . $encoded);
         return $response->getBody()->getContents();
     }
 
     public function getTXT(string $markup): string
     {
-        $encoded = $this->encoder->encode($markup);
+        $encoded  = $this->encoder->encode($markup);
         $response = $this->client->get($this->basePath . "txt/" . $encoded);
         return $response->getBody()->getContents();
     }

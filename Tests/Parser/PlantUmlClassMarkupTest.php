@@ -47,12 +47,12 @@ class PlantUmlClassMarkupTest extends TestCase
     {
         $fqcn = 'Entity\\Foo\\Bar';
         return [
-            ['"Entity/Foo/Bar" : foo' . PHP_EOL, $fqcn, 'foo'],
-            ['"Entity/Foo/Bar" : foo: string' . PHP_EOL, $fqcn, 'foo', 'string'],
-            ['"Entity/Foo/Bar" : +foo: string' . PHP_EOL, $fqcn, 'foo', 'string', '+'],
-            ['"Entity/Foo/Bar" : -foo' . PHP_EOL, $fqcn, 'foo', null, '-'],
-            ['"Entity/Foo/Bar" : -foo: string ="Hugo"' . PHP_EOL, $fqcn, 'foo', 'string', '-', '"Hugo"'],
-            ['"Entity/Foo/Bar" : -foo: string[1..2]' . PHP_EOL, $fqcn, 'foo', 'string', '-', null, '1..2'],
+                ['"Entity/Foo/Bar" : foo' . PHP_EOL, $fqcn, 'foo'],
+                ['"Entity/Foo/Bar" : foo: string' . PHP_EOL, $fqcn, 'foo', 'string'],
+                ['"Entity/Foo/Bar" : +foo: string' . PHP_EOL, $fqcn, 'foo', 'string', '+'],
+                ['"Entity/Foo/Bar" : -foo' . PHP_EOL, $fqcn, 'foo', null, '-'],
+                ['"Entity/Foo/Bar" : -foo: string ="Hugo"' . PHP_EOL, $fqcn, 'foo', 'string', '-', '"Hugo"'],
+                ['"Entity/Foo/Bar" : -foo: string[1..2]' . PHP_EOL, $fqcn, 'foo', 'string', '-', null, '1..2'],
         ];
     }
 

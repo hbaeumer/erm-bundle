@@ -84,7 +84,7 @@ class PlantUmlEntityParser
                 $multiplicity[1]
             );
             $fieldName = $associationMapping['fieldName'];
-            $mv = null;
+            $mv        = null;
             if ($multiplicity[1] !== '1') {
                 $mv = $multiplicity[1];
             }
@@ -99,7 +99,7 @@ class PlantUmlEntityParser
     private function getParent(ClassMetadata $classMetadata): void
     {
         $reflection = $classMetadata->getReflectionClass();
-        $parent = $reflection->getParentClass();
+        $parent     = $reflection->getParentClass();
         if (!$parent) {
             return;
         }
@@ -117,8 +117,8 @@ class PlantUmlEntityParser
     private function getField(ClassMetadata $classMetadata, string $fieldName, string $type, ?string $multiplicity = null): void
     {
         $classReflection = $classMetadata->getReflectionClass();
-        $defaults = $classReflection->getDefaultProperties();
-        $default = null;
+        $defaults        = $classReflection->getDefaultProperties();
+        $default         = null;
         if (array_key_exists($fieldName, $defaults)) {
             $default = $defaults[$fieldName];
             if (is_bool($default)) {

@@ -32,14 +32,14 @@ class ERMDiagramController extends AbstractController
 
     public function __construct(PlantUmlEntityParser $plantUmlEntityParser, PlantUmlGrapher $umlGrapher)
     {
-        $this->umlGrapher = $umlGrapher;
+        $this->umlGrapher           = $umlGrapher;
         $this->plantUmlEntityParser = $plantUmlEntityParser;
     }
 
     public function indexAction(): Response
     {
         $markup = $this->plantUmlEntityParser->getMarkup();
-        $svg = $this->umlGrapher->getSVG($markup);
+        $svg    = $this->umlGrapher->getSVG($markup);
         return new Response(
             "<html><body>$svg</body></html>"
         );

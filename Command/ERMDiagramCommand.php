@@ -41,7 +41,7 @@ class ERMDiagramCommand extends Command
     public function __construct(PlantUmlEntityParser $parser, PlantUmlGrapher $grapher)
     {
         parent::__construct();
-        $this->parser = $parser;
+        $this->parser  = $parser;
         $this->grapher = $grapher;
     }
 

@@ -37,8 +37,8 @@ class EncoderTest extends TestCase
     public function getEndocerExamples()
     {
         return [
-            ['foo', 'IylF1m00'],
-            ['Ä€1231!', 'Ezpog6cDeP6neI80'],
+                ['foo', 'IylF1m00'],
+                ['Ä€1231!', 'Ezpog6cDeP6neI80'],
         ];
     }
 

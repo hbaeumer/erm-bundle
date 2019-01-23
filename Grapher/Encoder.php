@@ -43,11 +43,11 @@ class Encoder
 
     private function append3bytes(int $byte1, int $byte2, int $byte3): string
     {
-        $cbyte1 = $byte1 >> 2;
-        $cbyte2 = (($byte1 & 0x3) << 4) | ($byte2 >> 4);
-        $cbyte3 = (($byte2 & 0xF) << 2) | ($byte3 >> 6);
-        $cbyte4 = $byte3 & 0x3F;
-        $string = "";
+        $cbyte1  = $byte1 >> 2;
+        $cbyte2  = (($byte1 & 0x3) << 4) | ($byte2 >> 4);
+        $cbyte3  = (($byte2 & 0xF) << 2) | ($byte3 >> 6);
+        $cbyte4  = $byte3 & 0x3F;
+        $string  = "";
         $string .= $this->encode6bit($cbyte1 & 0x3F);
         $string .= $this->encode6bit($cbyte2 & 0x3F);
         $string .= $this->encode6bit($cbyte3 & 0x3F);

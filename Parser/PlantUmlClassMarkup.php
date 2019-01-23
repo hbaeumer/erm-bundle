@@ -18,9 +18,9 @@ namespace Hbaeumer\ErmBundle\Parser;
  */
 class PlantUmlClassMarkup
 {
-    const VISIBILITY_PUBLIC = '+';
-    const VISIBILITY_PROTECTED = '#';
-    const VISIBILITY_PRIVATE = '-';
+    const VISIBILITY_PUBLIC          = '+';
+    const VISIBILITY_PROTECTED       = '#';
+    const VISIBILITY_PRIVATE         = '-';
     const VISIBILITY_PACKAGE_PRIVATE = '-';
 
     /**
@@ -60,11 +60,11 @@ class PlantUmlClassMarkup
     public function addParent(string $source, string $destination): void
     {
         $pattern = '"%s" --|> "%s"';
-        $string = vsprintf(
+        $string  = vsprintf(
             $pattern,
             [
-                $this->getClassName($source),
-                $this->getClassName($destination),
+             $this->getClassName($source),
+             $this->getClassName($destination),
 
             ]
         );
@@ -80,9 +80,9 @@ class PlantUmlClassMarkup
         $string = vsprintf(
             $pattern,
             [
-                $this->getClassName($fqcn),
-                (string)$visibility,
-                $attribute,
+             $this->getClassName($fqcn),
+             (string)$visibility,
+             $attribute,
             ]
         );
 
@@ -106,10 +106,10 @@ class PlantUmlClassMarkup
         if (!in_array(
             $visibility,
             [
-                self::VISIBILITY_PUBLIC,
-                self::VISIBILITY_PROTECTED,
-                self::VISIBILITY_PRIVATE,
-                self::VISIBILITY_PACKAGE_PRIVATE,
+             self::VISIBILITY_PUBLIC,
+             self::VISIBILITY_PROTECTED,
+             self::VISIBILITY_PRIVATE,
+             self::VISIBILITY_PACKAGE_PRIVATE,
             ],
             true
         )) {
@@ -128,13 +128,13 @@ class PlantUmlClassMarkup
     public function addAssociation(string $source, string $destination, ?string $sMultipicity = null, ?string $dMultipicity = null): void
     {
         $pattern = '"%s" %s --> %s "%s"';
-        $string = vsprintf(
+        $string  = vsprintf(
             $pattern,
             [
-                $this->getClassName($source),
-                ($sMultipicity) ? '"' . $sMultipicity . '"' : '',
-                ($dMultipicity) ? '"' . $dMultipicity . '"' : '',
-                $this->getClassName($destination),
+             $this->getClassName($source),
+             ($sMultipicity) ? '"' . $sMultipicity . '"' : '',
+             ($dMultipicity) ? '"' . $dMultipicity . '"' : '',
+             $this->getClassName($destination),
 
             ]
         );
