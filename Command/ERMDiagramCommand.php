@@ -58,7 +58,7 @@ class ERMDiagramCommand extends Command
             $output->writeln($markup);
         }
         if ($input->getOption('svg')) {
-            file_put_contents($input->getOption('svg'), $this->grapher->getTXT($markup));
+            file_put_contents($input->getOption('svg'), $this->grapher->getSVG($markup));
         }
     }
 }
