@@ -124,6 +124,10 @@ class PlantUmlEntityParser
             if (is_bool($default)) {
                 $default = ($default) ? 'true' : 'false';
             }
+
+            if (is_array($default)) {
+                $default = '[]';
+            }
         }
 
         $reflection = $classMetadata->getReflectionProperty($fieldName);
