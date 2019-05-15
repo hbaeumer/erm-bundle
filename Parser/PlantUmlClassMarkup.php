@@ -153,6 +153,8 @@ class PlantUmlClassMarkup
 
     public function getMarkup(): string
     {
-        return $this->markup;
+        $string = (string)$this->config;
+        $string .=$this->markup;
+        return $string;
     }
 }

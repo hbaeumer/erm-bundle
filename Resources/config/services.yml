@@ -30,7 +30,7 @@ services:
       - "@hbaeumer_erm.parser.plant_uml_entity_parser"
       - "@hbaeumer_erm.grapher.plant_uml_grapher"
 
-  Hbaeumer\ErmBundle\DataCollector\DataCollector:
+  Hbaeumer\ErmBundle\DataCollector\HbaeumerErmDataCollector:
     tags:
       -
         name: data_collector
